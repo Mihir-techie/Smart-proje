@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80") 
+                no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeBg 10s ease-in-out infinite alternate;
+  }
+
+  /* Background slow zoom animation */
+  @keyframes fadeBg {
+    from { background-size: 100% 100%; }
+    to   { background-size: 110% 110%; }
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,40,0.6);
+    z-index: 1;
+  }
+
+  .form-container {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px 50px;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 35px rgba(0,0,0,0.6);
+    text-align: center;
+    width: 450px;
+    animation: fadeIn 1.8s ease-in-out;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .form-container h2 {
+    color: #fff;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px rgba(0,150,255,0.8);
+    animation: glowText 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glowText {
+    from { text-shadow: 0 0 10px rgba(0,150,255,0.6); }
+    to { text-shadow: 0 0 25px rgba(0,200,255,1); }
+  }
+
+  .form input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .form input::placeholder {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .form input:focus {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,200,255,0.7);
+    background: rgba(255,255,255,0.25);
+  }
+
+  .btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  }
+
+  .btn:hover {
+    transform: scale(1.1) rotate(-1deg);
+    box-shadow: 0 10px 25px rgba(0,200,255,0.8);
+  }
+
+  .result {
+    margin-top: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div class="overlay"></div>
+
+<div class="form-container">
+  <h2>💧 Water Quality Prediction</h2>
+  <form action="/predict_water" method="POST" class="form">
+    <input type="number" step="any" name="ph" placeholder="pH" required>
+    <input type="number" step="any" name="hardness" placeholder="Hardness" required>
+    <input type="number" step="any" name="solids" placeholder="Solids" required>
+    <input type="number" step="any" name="chloramines" placeholder="Chloramines" required>
+    <input type="number" step="any" name="sulfate" placeholder="Sulfate" required>
+    <input type="number" step="any" name="conductivity" placeholder="Conductivity" required>
+    <input type="number" step="any" name="organic_carbon" placeholder="Organic Carbon" required>
+    <input type="number" step="any" name="trihalomethanes" placeholder="Trihalomethanes" required>
+    <input type="number" step="any" name="turbidity" placeholder="Turbidity" required>
+
+    <button type="submit" class="btn">Predict</button>
+  </form>
+
+  {% if prediction_text %}
+    <div class="result">{{ prediction_text }}</div>
+  {% endif %}
+</div>
+{% endblock %}

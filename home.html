@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  /* Full-page background with brightness */
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Background image layer with increased brightness */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://i.pinimg.com/736x/c3/9f/7d/c39f7d0a64c840f3557bcbc08fdc2ccc.jpg") 
+                no-repeat center center fixed;
+    background-size: cover;
+    filter: brightness(1.3); /* increased brightness by 30% */
+    z-index: -2; /* behind everything */
+  }
+
+  /* Overlay for better readability */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: -1; /* behind content but above background */
+  }
+
+  /* Main container */
+  .main-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 60px 20px;
+  }
+
+  /* Card container */
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 1000px;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  /* Glassmorphism card */
+  .card {
+    flex: 1 1 300px;
+    padding: 30px;
+    text-align: center;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    color: white;
+  }
+
+  .card:hover {
+    transform: scale(1.05) rotate(-1deg);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+  }
+
+  .card a {
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #4CAF50, #81C784);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+  }
+
+  .card a:hover {
+    background: linear-gradient(45deg, #2e7d32, #66bb6a);
+    transform: scale(1.08);
+  }
+
+  /* About client section */
+  .about-client {
+    margin-top: 60px;
+    text-align: center;
+    max-width: 800px;
+    padding: 40px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    color: white;
+    animation: slideUp 1.5s ease-in-out;
+  }
+
+  .about-client h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .about-client p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .client-circle {
+    width: 120px;
+    height: 120px;
+    margin: 20px auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2196F3, #64B5F6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    animation: pulse 2s infinite;
+  }
+
+  .linkedin-btn {
+    margin-top: 20px;
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #0077B5, #00A0DC);
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .linkedin-btn:hover {
+    background: linear-gradient(45deg, #005983, #0077B5);
+    transform: scale(1.05);
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(80px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .card-container {
+      flex-direction: column;
+    }
+    .about-client {
+      padding: 25px;
+    }
+  }
+</style>
+
+<div class="overlay"></div>
+
+<div class="main-container">
+  <!-- Irrigation & Water cards -->
+  <div class="card-container">
+    <div class="card">
+      <h2>🌱 Smart Irrigation</h2>
+      <p>Plan irrigation smartly with AI-driven insights for better crop yield.</p>
+      <a href="/irrigation">Explore</a>
+    </div>
+    <div class="card">
+      <h2>💧 Water Quality Prediction</h2>
+      <p>Check the safety and purity of water with intelligent monitoring.</p>
+      <a href="{{ url_for('water_page') }}">Explore</a>
+    </div>
+  </div>
+
+  <!-- About Client -->
+  <div class="about-client">
+    <div class="client-circle">ND</div>
+    <h2>Smart Irrigation Planner & Smart Water Quality Monitoring</h2>
+    <p>
+      This project was developed by <b>11th Grade students</b> with innovative ideas to 
+      solve real-world problems in agriculture and water safety.
+    </p>
+    <p><b>Developer:</b> Nethra D</p>
+    <a href="https://www.linkedin.com/in/nethra-d-955b96276/" 
+       target="_blank" class="linkedin-btn">🔗 Connect on LinkedIn</a>
+  </div>
+</div>
+{% endblock %}
